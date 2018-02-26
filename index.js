@@ -16,8 +16,15 @@ var scan = function(callback){
 						callback(err);
 						return;
 					}
-					let jsontext = JSON.parse(parser.toJson(text));
-					callback(null,jsontext.nmaprun.host);
+					//delete temp file
+					fs.unlink("out.xml",function(err){
+						if(err){
+							callback(err);
+							return;
+						}
+						let jsontext = JSON.parse(parser.toJson(text));
+						callback(null,jsontext.nmaprun.host);
+					});
 				});
 			}
 		});
