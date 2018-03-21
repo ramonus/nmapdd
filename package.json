@@ -1,6 +1,6 @@
 {
   "name": "nmapdd",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Basic nmap to Node.js wrapper.",
   "main": "index.js",
   "scripts": {
