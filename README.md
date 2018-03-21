@@ -10,8 +10,6 @@ It makes a scan via `nmap -sn 192.168.1.1/24` and gets the live hosts in a JSON 
 ## Basic example
 ```
 var scan = require("nmapdd");
-scan((err,hosts)=>{
-  if(err) throw err;
-  console.log(hosts);
-});
+scan().then(hosts => console.log(hosts)).catch(err => console.error(err));
+
 ```

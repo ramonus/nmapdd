@@ -2,7 +2,7 @@ var { spawn } = require("child_process");
 var parser = require("xml2json");
 var fs = require("fs");
 
-var scan = function(callback){
+var scan = () => new Promise((resolve,reject) => {
 	let nmap = spawn("nmap",["-oX","out.xml","-sn","192.168.1.1/24"]);
 	let dataString = '';
 	nmap.stdout.on("data", (data) => {
@@ -13,22 +13,20 @@ var scan = function(callback){
 			if(exists){
 				fs.readFile("out.xml","utf8",function(err,text){
 					if(err){
-						callback(err);
-						return;
+						return reject(err);
 					}
 					//delete temp file
 					fs.unlink("out.xml",function(err){
 						if(err){
-							callback(err);
-							return;
+							return reject(err);
 						}
 						let jsontext = JSON.parse(parser.toJson(text));
-						callback(null,jsontext.nmaprun.host);
+						resolve(jsontext.nmaprun.host);
 					});
 				});
 			}
 		});
 	});
 	
-}
+});
 module.exports = scan;
